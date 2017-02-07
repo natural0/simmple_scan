@@ -26,5 +26,19 @@ def portScan(tgtHost,tgtPorts):
         socket.setdefaulttimeout(1)
         for tgtPort in tgtPorts:
             print("scanning port:" + str(tgtPort))
-            connScan(tgtHost,tgtPort) 
-portScan("www.baidu.com",[80,443,3389,1433,23,445,80])
+            connScan(tgtHost,int(tgtPort)) 
+
+def main():
+    parser = optparse.OptionParser()
+    parser.add_option("-H","--Host",dest='tgtHost',help='input Host address')
+    parser.add_option("-p","--Ports",dest='tgtPort',help='input ports')
+    (options,args) = parser.parse_args()
+    tgtHost = options.tgtHost
+    tgtPort = options.tgtPort
+    args.append(tgtPort)
+    if (tgtPort == None) | (tgtHost == None):
+        print('----you must input Host and Port----')
+        exit(0)
+    portScan(tgtHost,args)
+if __name__=='__main__':
+    main()
